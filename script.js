@@ -21,32 +21,32 @@ function setup() {
     // showItem(item);
   });
 
-   //let myItemList= document.getElementById("itemList");
-   //const searchFieldElem = document.getElementById("searchField");
-  // let inputElem = document.getElementById("input");
-  // inputElem.addEventListener("input",function(){
-    //searchFieldElem.addEventListener("searchField",function(){
-    //allEpisodes.map(function(episodes){
-     // if(episodes.name.includes(inputElem.value)===true){
-        // console.log(episodes.name);
-       // let myItem = document.createElement("li");
-       // myItem.innerHTML = `${episodes.name}`;
-        //myItemList.appendChild(myItem);
-      //}
-   // })
+   let myItemList= document.getElementById("itemList");
+  //  const searchFieldElem = document.getElementById("searchField");
+  let inputElem = document.getElementById("input");
+  inputElem.addEventListener("input",function(){
+    // searchFieldElem.addEventListener("searchField",function(){
+    allEpisodes.map(function(episodes){
+     if(episodes.name.includes(inputElem.value)===true){
+        console.log(episodes.name);
+       let myItem = document.createElement("li");
+       myItem.innerHTML = `${episodes.name}`;
+        myItemList.appendChild(myItem);
+      }
+   })
 
- // })
+ })
 }
-function showItem(item){
-  const list = document.getElementById("itemList");
-  list.innerHTML = "";
-  item.forEach(item =>{
-    const elem = document.createElement("li");
-    elem.innerText = item;
-    list.appendChild(elem);
-  });
-  displayNum.innerText = `Displaying ${episodeList.length}/ ${allEpisodes.length}`;
-}
+// function showItem(item){
+//   const list = document.getElementById("itemList");
+//   list.innerHTML = "";
+//   item.forEach(item =>{
+//     const elem = document.createElement("li");
+//     elem.innerText = item;
+//     list.appendChild(elem);
+//   });
+//   displayNum.innerText = `Displaying ${episodeList.length}/ ${allEpisodes.length}`;
+//  }
 
  function makePageForEpisodes(episodeList) {
   // displayNum.innerText = `Displaying ${episodeList.length}/ ${allEpisodes.length}`;
@@ -56,20 +56,20 @@ function showItem(item){
   
  }
 
-let searchTimeoutToken = 0;
+// let searchTimeoutToken = 0;
 
-window.onload =  () =>{
-  const searchFieldElem = document.getElementById("searchField").value;
-  searchFieldElem.onkeyup = (episodes)=>{
+// window.onload =  () =>{
+//   const searchFieldElem = document.getElementById("searchField").value;
+//   searchFieldElem.onkeyup = (episodes)=>{
 
-    clearTimeout(searchTimeoutToken);
-    if(searchFieldElem.value.length === 0){
-      return;
-    }
-   searchTimeoutToken = setTimeout(()=>{
-      setup(searchFieldElem.value);
-    },300)
+//     clearTimeout(searchTimeoutToken);
+//     if(searchFieldElem.value.length === 0){
+//       return;
+//     }
+//    searchTimeoutToken = setTimeout(()=>{
+//       setup(searchFieldElem.value);
+//     },300)
     
-  }
-}
+  // }
+// }
  window.onload = setup;
