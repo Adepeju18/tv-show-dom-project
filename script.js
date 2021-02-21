@@ -1,75 +1,80 @@
 //You can edit ALL of the code here
 let allEpisodes;
+let inputElem;
+let selectElem;
+allEpisodes = getAllEpisodes();
+
 function setup() {
-  const allEpisodes = getAllEpisodes();
+  // allEpisodes = getAllEpisodes();
   makePageForEpisodes(allEpisodes);
-  allEpisodes.forEach(function(show){
+  inputElem = document.getElementById("input");
+  inputElem.addEventListener("input", filterEpisodes)
+}
+
+
+function filterEpisodes() {
+  let lowerCase = inputElem.value.toLowerCase();
+  let filteredEpisodes = allEpisodes.filter(function (episode) {
+    if (episode.name.toLowerCase().includes(lowerCase) === true) {
+      return true;
+    }
+    if (episode.summary.toLowerCase().includes(lowerCase) === true) {
+      return true;
+    }
+    return false;
+  });
+
+  makePageForEpisodes(filteredEpisodes);
+  document.getElementById("search").innerHTML =
+    `Displaying ${filteredEpisodes.length}
+   / ${allEpisodes.length} episodes`;
+}
+
+
+function makePageForEpisodes(episodeList) {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "";
+  episodeList.forEach(function (episode) {
+    addOneEpisode(episode);
+  });
+
+
+  function addOneEpisode(episode) {
     let divElem = document.createElement("div");
     let h2El = document.createElement("h2");
     let imgElem = document.createElement("img");
     let parElem = document.createElement("p");
-    let displayNum = document.getElementById("search-result");
-    h2El.innerHTML = `${show.name}- S${String(show.season).padStart(2,"0")}
-    E${String(show.number).padStart(2,"o")}`;
-    imgElem.src = `${show.image.medium}`;
-    parElem.innerHTML = `${show.summary}`;
+    h2El.innerHTML = `${episode.name}- S${String(episode.season).padStart(2, "0")}
+    E${String(episode.number).padStart(2, "o")}`;
+    imgElem.src = `${episode.image.medium}`;
+    parElem.innerHTML = `${episode.summary}`;
     divElem.classList = "summaryContainer";
     document.getElementById("root").appendChild(divElem);
     divElem.appendChild(h2El);
     divElem.appendChild(imgElem);
     divElem.appendChild(parElem);
-    // showItem(item);
-  });
+  }
 
-   let myItemList= document.getElementById("itemList");
-  //  const searchFieldElem = document.getElementById("searchField");
-  let inputElem = document.getElementById("input");
-  inputElem.addEventListener("input",function(){
-    // searchFieldElem.addEventListener("searchField",function(){
-    allEpisodes.map(function(episodes){
-     if(episodes.name.includes(inputElem.value)===true){
-        console.log(episodes.name);
-       let myItem = document.createElement("li");
-       myItem.innerHTML = `${episodes.name}`;
-        myItemList.appendChild(myItem);
-      }
-   })
 
- })
-}
-// function showItem(item){
-//   const list = document.getElementById("itemList");
-//   list.innerHTML = "";
-//   item.forEach(item =>{
-//     const elem = document.createElement("li");
-//     elem.innerText = item;
-//     list.appendChild(elem);
-//   });
-//   displayNum.innerText = `Displaying ${episodeList.length}/ ${allEpisodes.length}`;
-//  }
+  selectElem = document.getElementById("select-episodes");
+  for (let i = 0; i < allEpisodes.length; i++) {
+    let showOption = document.createElement("option");
+    showOption.value = i;
+    showOption.innerHTML = `S${String(allEpisodes[i].season).padStart(2, "0")}  
+    E${String(allEpisodes[i].number).padStart(2, "0")} -${allEpisodes[i].name}`;
+    selectElem.appendChild(showOption);
+  }
+  selectElem.addEventListener("change", (e) => {
+    let index = e.target.value;
+    makePageForEpisodes([allEpisodes[index]]);
 
- function makePageForEpisodes(episodeList) {
-  // displayNum.innerText = `Displaying ${episodeList.length}/ ${allEpisodes.length}`;
-   const rootElem = document.getElementById("root");
-//   rootElem.textContent = `Got ${episodeList.length} episodes(s)}`;
-//    console.log(episodeList);
+  })
   
- }
+    selectElem.addEventListener("mouseover",(e)=>{
+      document.location.reload(true);
+    });
+  
 
-// let searchTimeoutToken = 0;
+}
 
-// window.onload =  () =>{
-//   const searchFieldElem = document.getElementById("searchField").value;
-//   searchFieldElem.onkeyup = (episodes)=>{
-
-//     clearTimeout(searchTimeoutToken);
-//     if(searchFieldElem.value.length === 0){
-//       return;
-//     }
-//    searchTimeoutToken = setTimeout(()=>{
-//       setup(searchFieldElem.value);
-//     },300)
-    
-  // }
-// }
- window.onload = setup;
+window.onload = setup;

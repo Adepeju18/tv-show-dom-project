@@ -19,9 +19,28 @@
   border: 3px solid blueviolet;
   border-radius: 10px;
   font-size: 1.2em;
+  background-color: rgb(219, 41, 10);
+  color: #000;
 }
 
 .summaryContainer{
   background-color:grey;
   border: radius 10px; 
+  display: hidden;
+}
+footer{
+  text-align: center;
+  background-color: hotpink;
+  font: 1.5em sans-serif;
+}
+input{
+  color: rgb(10, 10, 10);
+  border: 2px solid;
+
+}
+select{
+  width: 500px;
+  background-color: rgb(29, 214, 238);
+  border:2px solid black;
+  
 }
