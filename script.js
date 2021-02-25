@@ -2,14 +2,41 @@
 let allEpisodes;
 let inputElem;
 let selectElem;
-allEpisodes = getAllEpisodes();
+// allEpisodes = getAllEpisodes();
+ let allShow;
+// let allShow = getAllShows();
+
 
 function setup() {
-  // allEpisodes = getAllEpisodes();
+   allShow = getAllShows();
+  allShow.sort(function (a, b) {
+    if (a.name < b.name) {
+      return 1;
+    }
+    if (a.name > b.name) {
+      return -1;
+    }
+  });
   makePageForEpisodes(allEpisodes);
   inputElem = document.getElementById("input");
   inputElem.addEventListener("input", filterEpisodes)
+
 }
+
+fetch(`https://api.tvmaze.com/shows/${allShow[0].id}/episodes`)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    filterEpisodes(data);
+    makePageForEpisodes(data);
+    addOneEpisode(data);
+  })
+  .catch(function (error) {
+    console.log(error)
+  });
+
+
 
 
 function filterEpisodes() {
@@ -44,6 +71,8 @@ function makePageForEpisodes(episodeList) {
     let h2El = document.createElement("h2");
     let imgElem = document.createElement("img");
     let parElem = document.createElement("p");
+    let selectShow = document.createElement("select");
+    selectShow.className = "selectShow";
     h2El.innerHTML = `${episode.name}- S${String(episode.season).padStart(2, "0")}
     E${String(episode.number).padStart(2, "o")}`;
     imgElem.src = `${episode.image.medium}`;
@@ -54,6 +83,27 @@ function makePageForEpisodes(episodeList) {
     divElem.appendChild(imgElem);
     divElem.appendChild(parElem);
   }
+
+  allShow.forEach((show) => {
+    let option = document.getElementById("option");
+    option = `${show.id}>${show.name}`;
+    selectShow.innerHTML += option;
+  });
+  selectShow.addEventListener("change", (e) => {
+    let showId = e.target.value;
+    console.log(showId);
+    fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
+      .then(function (response) {
+        return response.json();
+      })
+    filterEpisodes(data);
+    makePageForEpisodes(data);
+    addOneEpisode(data);
+  })
+    .catch(function (error) {
+      console.log(error)
+    });
+
 
 
   selectElem = document.getElementById("select-episodes");
@@ -69,12 +119,54 @@ function makePageForEpisodes(episodeList) {
     makePageForEpisodes([allEpisodes[index]]);
 
   })
-  
-    selectElem.addEventListener("mouseover",(e)=>{
-      document.location.reload(true);
-    });
-  
+
+  selectElem.addEventListener("mouseover", (e) => {
+    document.location.reload(true);
+  });
+
 
 }
 
 window.onload = setup;
+
+
+
+// function fetchAllEpisodes(showId){
+//   fetch("https://api.tvmaze.com/show/" +showId + "/episodes")
+//     .then(function (response) {
+//     return response.json();
+//    })
+//    .then(function(data){
+//      console.log(data.episode);
+//      allEpisodes = episodesData;
+//      filterEpisodes = episodesData.length
+//    });
+
+//    function fetchAllShows(){
+//      allShows = getAllShows();
+//      selectElem(allShows);
+
+  //  }
+
+
+//   .then((episodesData)=>{
+//     allEpisodes = episodesData;
+//     filterEpisodes = episodesData.length
+
+
+//   })
+// }
+
+// fetch(" https://www.tvmaze.com/api#show-episode-list")
+//   .then(function (response) {
+//     return response.json();
+
+//   })
+//     .then(function (data) {
+//       console.log(data);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+
+  // }
+
