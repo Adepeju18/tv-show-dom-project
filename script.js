@@ -2,7 +2,7 @@
 let allEpisodes;
 let inputElem;
 let selectElem;
-// allEpisodes = getAllEpisodes();
+allEpisodes = getAllEpisodes();
  let allShow;
 // let allShow = getAllShows();
 
@@ -11,17 +11,20 @@ function setup() {
    allShow = getAllShows();
   allShow.sort(function (a, b) {
     if (a.name < b.name) {
-      return 1;
-    }
-    if (a.name > b.name) {
       return -1;
     }
+    if (a.name > b.name) {
+      return +1;
+    }
   });
-  makePageForEpisodes(allEpisodes);
+  populateShowSelect();
+  selectEpisode(allEpisodes);
+
+  // makePageForEpisodes(allEpisodes);
   inputElem = document.getElementById("input");
   inputElem.addEventListener("input", filterEpisodes)
 
-}
+
 
 fetch(`https://api.tvmaze.com/shows/${allShow[0].id}/episodes`)
   .then(function (response) {
@@ -31,10 +34,42 @@ fetch(`https://api.tvmaze.com/shows/${allShow[0].id}/episodes`)
     filterEpisodes(data);
     makePageForEpisodes(data);
     addOneEpisode(data);
+     selectEpisode(data);
   })
   .catch(function (error) {
     console.log(error)
   });
+
+ }
+function populateShowSelect(){
+  const selectShow = document.getElementById("select-show");
+  allShow.forEach((show) => {
+    let option = document.createElement("option");
+    option.innerText = show.name;
+    option.value = show.id
+    selectShow.appendChild(option);
+  });
+  selectShow.addEventListener("change", (e) => {
+    let showId = e.target.value;
+    console.log(showId);
+    fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function(data){
+        allEpisodes = data;
+        filterEpisodes(allEpisodes);
+        makePageForEpisodes(allEpisodes);
+        // addOneEpisode(allEpisodes);
+        selectEpisode(allEpisodes);
+        
+      })
+    .catch(function (error) {
+      console.log(error)
+    });
+  })
+
+}
 
 
 
@@ -62,17 +97,17 @@ function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
   episodeList.forEach(function (episode) {
-    addOneEpisode(episode);
+     addOneEpisode(episode);
   });
-
+}
 
   function addOneEpisode(episode) {
     let divElem = document.createElement("div");
     let h2El = document.createElement("h2");
     let imgElem = document.createElement("img");
     let parElem = document.createElement("p");
-    let selectShow = document.createElement("select");
-    selectShow.className = "selectShow";
+    // let selectShow = document.createElement("select");
+    // selectShow.className = "selectShow";
     h2El.innerHTML = `${episode.name}- S${String(episode.season).padStart(2, "0")}
     E${String(episode.number).padStart(2, "o")}`;
     imgElem.src = `${episode.image.medium}`;
@@ -84,29 +119,11 @@ function makePageForEpisodes(episodeList) {
     divElem.appendChild(parElem);
   }
 
-  allShow.forEach((show) => {
-    let option = document.getElementById("option");
-    option = `${show.id}>${show.name}`;
-    selectShow.innerHTML += option;
-  });
-  selectShow.addEventListener("change", (e) => {
-    let showId = e.target.value;
-    console.log(showId);
-    fetch(`https://api.tvmaze.com/shows/${showId}/episodes`)
-      .then(function (response) {
-        return response.json();
-      })
-    filterEpisodes(data);
-    makePageForEpisodes(data);
-    addOneEpisode(data);
-  })
-    .catch(function (error) {
-      console.log(error)
-    });
 
 
-
+function selectEpisode(allEpisodes){
   selectElem = document.getElementById("select-episodes");
+  selectElem.innerHTML = "";
   for (let i = 0; i < allEpisodes.length; i++) {
     let showOption = document.createElement("option");
     showOption.value = i;
@@ -116,16 +133,17 @@ function makePageForEpisodes(episodeList) {
   }
   selectElem.addEventListener("change", (e) => {
     let index = e.target.value;
-    makePageForEpisodes([allEpisodes[index]]);
+     makePageForEpisodes([allEpisodes[index]]);
 
   })
-
-  selectElem.addEventListener("mouseover", (e) => {
-    document.location.reload(true);
-  });
-
-
 }
+
+  // selectElem.addEventListener("mouseover", (e) => {
+  //   document.location.reload(true);
+  // });
+
+
+
 
 window.onload = setup;
 
