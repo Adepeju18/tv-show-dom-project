@@ -1,30 +1,17 @@
-html{
-  height: 100%;
-}
+
 #root {
-  color:brown;
+  width: 100%;
+  /* color:brown;
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  gap: 10px;
+  gap: 10px; */
 }
-/* header{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 100px;
-  position: relative;
-  font-size: 80px;
-  width: 100%;
-  border-radius: 10px;
-  font-family: 'Courier New', Courier, monospace;
-  
 
-} */
-#homeBtn{
+#home{
   background-color: rgb(173, 171, 17);
   border-radius: 30px;
-  font-size: 20px;
-  margin-top: 1em;
+  font-size: 30px;
+  margin-top: em;
   margin-right: 3em;
   float: right;
   border: chocolate 2px solid;
@@ -48,7 +35,7 @@ body{
    background-color: rgb(4, 105, 105); 
 }
 img{
-  width: 100%;
+  width: 20%;
   border-radius: 10px;
 }
 
@@ -65,15 +52,18 @@ img{
 }
 
 .summaryContainer{
-  background-color:grey;
+  width: 45%;
+  display: inline-block;
+  margin-left: 3em;
+  /* background-color:grey;
   border: radius 10px; 
-  display: hidden;
+  /* display: hidden; */
   /* display: grid;
   justify-items: center;
   grid-template-columns: repeat(3,1fr);
   width: 80vw;
   gap: 40px;
-  margin: auto; */
+  margin: auto; */ 
 }
 footer{
   text-align: center;
@@ -103,8 +93,48 @@ select{
   height: 3em;
   
 }
-/* @media(max-width:960px){
-  summaryContainer{
+.showTitle{
+  cursor: pointer;
+}
+
+ .showInfoDiv{ 
+   display: flex;
+   flex-direction: row;  
+  justify-content: space-around; 
+   background-color: rgb(142, 142, 204);
+   padding: 50px;
+   /* box-shadow: 5px 10px yellow;   */
+    gap: 30px; 
+} 
+#divInfo{
+  width: 50%;
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px; 
+  height: 100px;
+  padding:20px ;
+  box-shadow: 5px 10px rgb(255, 0, 242);
+  background-color: saddlebrown;
+}
+
+
+  
+
+
+.showSummary{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: rgb(202, 205, 50);
+  padding: 20px;
+  width: 60%;
+  height: auto;
+  font-size: larger;
+  box-shadow: 5px 10px tomato;
+}
+@media(max-width:960px){
+  .showInfoDiv{
     grid-template-columns:repeat(1, 1fr);
   }
-} */
+}
