@@ -1,9 +1,5 @@
 #root {
   width: 100%;
-  /* color:brown;
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 10px; */
 }
 #frames {
   display: grid;
@@ -31,20 +27,12 @@
   text-align: center;
 }
 body {
-  /* height: 50%; */
   margin: 0;
   display: grid;
   flex-direction: column;
   justify-items: center;
   margin: auto;
   gap: 50px;
-
-  /* grid-template-columns: repeat(3, 1fr);
-  grid-template-areas:
-  "header"
-  "select"
-  "footer" ;
-   grid-template-rows: 200px ; */
   background-color: rgb(4, 105, 105);
 }
 img {
@@ -75,20 +63,10 @@ img {
   border-radius: 20px;
   box-shadow: 0 2px 20px rgb(240, 10, 163);
   margin: auto;
-  /* gap: 20px; */
   color: #000;
   font-size: 1.5em;
+  cursor: pointer;
 
-  /* margin-left: 3em;
-  background-color:grey;
-  border: radius 10px; 
-  display: hidden; 
-  display: grid;
-  justify-items: center;
-  grid-template-columns: repeat(3,1fr);
-  width: 80vw;
-  gap: 40px;
-  margin: auto;  */
 }
 footer {
   text-align: center;
@@ -135,7 +113,6 @@ select {
 .showInfoDiv {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-around; */
   background: linear-gradient(to right, rgb(126, 76, 126), rgb(244, 6, 252));
   padding: 20px;
   border-radius: 20px;
